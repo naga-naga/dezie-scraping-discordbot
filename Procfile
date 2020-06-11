@@ -1,0 +1,1 @@
+discordbot-dezie: python main.py
