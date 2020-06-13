@@ -27,16 +27,6 @@ output_ID_path = [
     "data/rid_exam.dat",  # 授業調整・期末試験ページ
 ]
 
-# お知らせする時間
-info_time_list = [
-    "06:00",
-    "09:00",
-    "12:00",
-    "15:00",
-    "18:00",
-    "21:00",
-]
-
 client = discord.Client()
 
 # メッセージを送る
@@ -63,9 +53,6 @@ async def send_infomation():
             if text != "":
                 # 送信
                 await send_message(text)
-    else:
-        # 新着情報がない場合
-        await send_message("新着情報なし！")
 
 # BOTの準備ができた時に呼び出される
 @client.event
@@ -80,9 +67,9 @@ async def on_ready():
 # 60秒ごとに繰り返す
 @tasks.loop(seconds=60)
 async def loop():
-    # 現在時刻を取得
-    now = datetime.now().strftime("%H:%M")
-    if now in info_time_list:
+    # 現在時刻の「分」を取得
+    minute = datetime.now().strftime("%M")
+    if minute == "00":
         await send_infomation()
 
 client.run(TOKEN)
